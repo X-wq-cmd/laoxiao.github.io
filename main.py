@@ -209,7 +209,7 @@ def page1():
             <h3>劳肖 (Lao Xiao)</h3>
             <p>🎮 游戏爱好者 | ✨ 创意达人</p>
             <hr style="margin: 1rem 0; border-top: 1px solid #eee;">
-            <p>👤 <b>性别:</b> 中性</p>
+            <p>👤 <b>性别:</b> ♂</p>
             <p>❤️ <b>爱好:</b> 游戏开发 & 视频创作</p>
             <p>🎮 <b>擅长游戏:</b></p>
             <ul>

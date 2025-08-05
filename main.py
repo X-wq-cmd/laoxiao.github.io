@@ -322,7 +322,24 @@ def page3():
     """推荐视频页面"""
     st.divider()
     st.subheader("推荐作品")
-    st.info("🌟 正在开发中哦……,敬请期待！", icon="📺")
+    with st.expander("🔥 优质作品：（高燃）埼玉训练1000天挑战终局之战，第1000天", expanded=True):
+        col_vid1, col_desc1 = st.columns([3, 2])
+        with col_vid1:
+            st.video('1000天.mp4')
+        with col_desc1:
+            st.markdown("""
+            <div class="card" style="height: 100%;">
+                <h4>视频信息</h4>
+                <p>📅 发布于2025年7月</p>
+                <p>👁️ 播放量：548.2w</p>
+                <p>👍 点赞：82.6w</p>
+                <p>💬 评论：523123条</p>
+                <hr style="margin: 0.8rem 0;">
+                <p>一位以惊人自律达成里程碑，心怀感恩、目标清晰、开放共享，并极具号召力引领社群共同成长的榜样型奋斗者</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+# ... 前面的代码保持不变 ...
 
 def page4():
     """小工具页面"""
@@ -402,9 +419,66 @@ def page4():
                 <p>将图像颜色进行数学反相：每个像素的RGB值被转换为(255 - R, 255 - G, 255 - B)</p>
             </div>
             """, unsafe_allow_html=True)
-    else:
-        st.warning("请上传图片以体验换色效果", icon="⚠️")
         
+    st.divider() 
+    
+    # 添加计算器功能
+    st.title("🧮 计算器")
+    st.markdown("选择计算方式并输入数字进行计算")
+    
+    # 使用两列布局
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        # 选择计算方式
+        operation = st.selectbox(
+            "请选择计算方式:", 
+            ["+", "-", "×", "÷", "√"],
+            index=0
+        )
+    
+    with col2:
+        # 根据选择的运算显示不同的输入框
+        if operation == "√":
+            num1 = st.number_input("输入数字", value=16.0, step=0.1)
+            num2 = None
+        else:
+            num1 = st.number_input("第一个数字", value=10.0, step=0.1)
+            num2 = st.number_input("第二个数字", value=5.0, step=0.1)
+    
+    # 计算按钮
+    if st.button("开始计算", use_container_width=True):
+        try:
+            if operation == "+":
+                result = num1 + num2
+            elif operation == "-":
+                result = num1 - num2
+            elif operation == "×":
+                result = num1 * num2
+            elif operation == "÷":
+                if num2 == 0:
+                    st.error("错误：除数不能为零！")
+                    result = None
+                else:
+                    result = num1 / num2
+            elif operation == "√":
+                if num1 < 0:
+                    st.error("错误：不能对负数开平方根！")
+                    result = None
+                else:
+                    result = num1 ** 0.5
+            
+            # 显示结果
+            if result is not None:
+                st.success(f"计算结果: {result:.4f}")
+                # 根据结果大小显示不同效果
+                if abs(result) > 1000:
+                    st.balloons()
+                elif abs(result) < 0.1:
+                    st.snow()
+        except Exception as e:
+            st.error(f"计算错误: {str(e)}")
+    
     st.divider() 
     
     #智慧词典
@@ -445,6 +519,7 @@ def page4():
             st.snow()
         if word == "balloon":
             st.balloons()
+            
         if word == "python":    
             st.title("🐍")
             st.code('''#恭喜你触发彩蛋，这是网站部分源码：
@@ -461,9 +536,8 @@ def page4():
                     return img''')
     elif len(word) >= 1 and word not in words_dist:
         st.write("😭没有找到该单词")
-    if word == "傻逼作者":
-        st.write("草泥马")
-
+  
+   
 def page5():
     """联系我页面"""
     st.title("📱 联系我")
